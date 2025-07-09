@@ -19,7 +19,7 @@ public class InventoryScannerApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Surface.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Inventory.fxml"));
         loader.setControllerFactory(context::getBean);
         Parent root = loader.load();
 
