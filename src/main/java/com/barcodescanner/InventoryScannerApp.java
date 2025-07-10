@@ -19,17 +19,17 @@ public class InventoryScannerApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddProduct.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Inventory.fxml"));
         loader.setControllerFactory(context::getBean);
         Parent root = loader.load();
+
+        // Inject primaryStage into SceneManager
+        SceneManager sceneManager = context.getBean(SceneManager.class);
+        sceneManager.setPrimaryStage(primaryStage);
 
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Inventory Scanner");
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     @Override
