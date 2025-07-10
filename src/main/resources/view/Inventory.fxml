@@ -1,16 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.barcodescanner.controller.InventoryController"
-            prefHeight="400.0" prefWidth="600.0">
-<Label fx:id="lblInventory"/>
-    <TextField fx:id="textField" />
-    <Button fx:id="button" text="Button" onAction="#onAction"/>
-</VBox>
+<AnchorPane id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="468.0" prefWidth="467.0" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.barcodescanner.controller.InventoryController">
+   <TextField id="productTextField" layoutX="102.0" layoutY="124.0" prefHeight="34.0" prefWidth="263.0">
+      <font>
+         <Font size="18.0"/>
+      </font>
+   </TextField>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="76.0" stroke="BLACK" strokeType="INSIDE"
+              width="467.0"/>
+   <Button id="productSubmitButton" layoutX="102.0" layoutY="207.0" mnemonicParsing="false" prefHeight="26.0"
+           prefWidth="263.0" text="Submit" textFill="#635050">
+      <cursor>
+         <Cursor fx:constant="OPEN_HAND"/>
+      </cursor>
+      <effect>
+         <Blend/>
+      </effect>
+   </Button>
+   <Label id="productNameLabel" alignment="CENTER" layoutX="105.0" layoutY="250.0" prefHeight="42.0" prefWidth="263.0"
+          text="Product Name">
+      <font>
+         <Font name="System Bold" size="23.0"/>
+      </font>
+   </Label>
+   <ImageView id="productImage" fitHeight="129.0" fitWidth="172.0" layoutX="151.0" layoutY="302.0" pickOnBounds="true"
+              preserveRatio="true"/>
+   <Label id="headerLabel" alignment="TOP_CENTER" layoutX="90.0" layoutY="20.0" prefHeight="35.0" prefWidth="274.0"
+          text="BARCODE SCANNER">
+      <textFill>
+         <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+            <stops>
+               <Stop>
+                  <color>
+                     <Color/>
+                  </color>
+               </Stop>
+               <Stop offset="1.0">
+                  <color>
+                     <Color red="1.0" green="1.0" blue="1.0"/>
+                  </color>
+               </Stop>
+            </stops>
+         </RadialGradient>
+      </textFill>
+      <font>
+         <Font name="System Bold" size="24.0"/>
+      </font>
+   </Label>
+</AnchorPane>
