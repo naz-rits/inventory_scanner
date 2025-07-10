@@ -20,7 +20,7 @@
       </font>
    </TextField>
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="76.0" stroke="BLACK" strokeType="INSIDE" width="467.0" />
-   <Button fx:id="productSubmitButton" layoutX="102.0" layoutY="207.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="263.0" text="Submit" textFill="#635050">
+   <Button fx:id="productSubmitButton" layoutX="102.0" layoutY="207.0" mnemonicParsing="false" onAction="#onSubmitClick" prefHeight="26.0" prefWidth="263.0" text="Submit" textFill="#635050">
       <cursor>
          <Cursor fx:constant="OPEN_HAND" />
       </cursor>
@@ -59,4 +59,9 @@
       <cursor>
          <Cursor fx:constant="OPEN_HAND" />
       </cursor></Button>
+   <Button onAction="#scanCamera" fx:id="scanWithCamera" layoutX="182.0" layoutY="89.0" mnemonicParsing="false" text="Scan with Camera">
+      <cursor>
+         <Cursor fx:constant="OPEN_HAND" />
+      </cursor>
+   </Button>
 </AnchorPane>

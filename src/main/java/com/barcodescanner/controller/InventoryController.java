@@ -1,7 +1,11 @@
 package com.barcodescanner.controller;
 
 import com.barcodescanner.SceneManager;
+import com.barcodescanner.services.BarcodeScanner;
+import com.barcodescanner.services.CameraScannerService;
 import com.barcodescanner.services.ProductService;
+import com.github.sarxos.webcam.Webcam;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -25,6 +29,15 @@ public class InventoryController {
     @Autowired
     private SceneManager sceneManager;
 
+    @Autowired
+    private BarcodeScanner barcodeScanner;
+
+    @Autowired
+    private CameraScannerService cameraScannerService;
+
+    private Webcam webcam;
+    private boolean scanning = false;
+
     @FXML
     private TextField productTextField;
 
@@ -44,8 +57,45 @@ public class InventoryController {
     private Button goToAddProduct;
 
     @FXML
+    private Button scanWithCamera;
+
+    @FXML
+    public void initialize() {
+        scanWithCamera.setOnAction(e -> {
+            cameraScannerService.startCamera(productImage, barcode -> {
+                Platform.runLater(() -> {
+                    productTextField.setText(barcode);
+                    onSubmitClick();
+                });
+            });
+        });
+    }
+
+    @FXML
+    public void scanCamera(ActionEvent actionEvent) {
+        scanWithCamera.setOnAction(e -> {
+            barcodeScanner.startScanning(new BarcodeScanner.BarcodeScanCallback() {
+                @Override
+                public void onBarcodeDetected(String barcode) {
+                    // update on JavaFX thread
+                    javafx.application.Platform.runLater(() -> {
+                        productTextField.setText(barcode);
+                        onSubmitClick(); // optionally auto-submit
+                    });
+                }
+
+                @Override
+                public void onError(String message) {
+                    javafx.application.Platform.runLater(() ->
+                            showAlert("Scanner Error: " + message)
+                    );
+                }
+            });
+        });
+    }
+    @FXML
     private void handleGoToAddProduct() {
-        System.out.println("Button clicked!");
+        cameraScannerService.stopCamera();
         sceneManager.switchScene("/view/AddProduct.fxml", "Add Product");
     }
 
@@ -53,7 +103,7 @@ public class InventoryController {
     private void onSubmitClick() {
         String barcode = productTextField.getText().trim();
         if (barcode.isEmpty()) {
-            showAlert();
+            showAlert("Please Enter Barcode");
             return;
         }
 
@@ -72,10 +122,12 @@ public class InventoryController {
         });
     }
 
-    private void showAlert() {
+    private void showAlert(String alertMessage) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
-        alert.setContentText("Please enter a barcode.");
+        alert.setContentText(alertMessage);
         alert.showAndWait();
     }
+
+
 }

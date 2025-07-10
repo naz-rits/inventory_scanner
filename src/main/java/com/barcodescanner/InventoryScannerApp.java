@@ -23,7 +23,7 @@ public class InventoryScannerApp extends Application {
         loader.setControllerFactory(context::getBean);
         Parent root = loader.load();
 
-        // Inject primaryStage into SceneManager
+
         SceneManager sceneManager = context.getBean(SceneManager.class);
         sceneManager.setPrimaryStage(primaryStage);
 
