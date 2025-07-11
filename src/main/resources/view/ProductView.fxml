@@ -48,37 +48,32 @@
     <StackPane layoutX="-1.0" layoutY="294.0" prefHeight="308.0" prefWidth="400.0">
         <VBox alignment="TOP_CENTER" prefHeight="300.0" prefWidth="400.0" spacing="30.0" StackPane.alignment="CENTER">
             <opaqueInsets>
-                <Insets/>
+                <Insets />
             </opaqueInsets>
-            <Label fx:id="productName" alignment="CENTER" contentDisplay="CENTER" text="Product Name"
-                   textAlignment="CENTER">
+            <Label fx:id="productName" alignment="CENTER" contentDisplay="CENTER" text="Product Name" textAlignment="CENTER">
                 <font>
-                  <Font name="System Italic" size="14.0"/>
+                  <Font name="System Italic" size="14.0" />
                 </font>
             </Label>
-            <Label fx:id="productBarcode" alignment="CENTER" contentDisplay="CENTER" text="Product Barcode"
-                   textAlignment="CENTER">
+            <Label fx:id="productBarcode" alignment="CENTER" contentDisplay="CENTER" text="Product Barcode" textAlignment="CENTER">
                 <font>
-                    <Font name="System Italic" size="14.0"/>
+                    <Font name="System Italic" size="14.0" />
                 </font>
             </Label>
-            <Label fx:id="productPrice" alignment="CENTER" contentDisplay="CENTER" lineSpacing="40.0"
-                   text="Product Price" textAlignment="CENTER">
+            <Label fx:id="productPrice" alignment="CENTER" contentDisplay="CENTER" lineSpacing="40.0" text="Product Price" textAlignment="CENTER">
                 <font>
-                    <Font name="System Italic" size="14.0"/>
+                    <Font name="System Italic" size="14.0" />
                 </font>
             </Label>
-            <Label fx:id="productDescription" alignment="CENTER" contentDisplay="CENTER" lineSpacing="40.0"
-                   text="Product Description" textAlignment="CENTER">
+            <Label fx:id="productDescription" alignment="CENTER" contentDisplay="CENTER" lineSpacing="40.0" text="Product Description" textAlignment="CENTER" wrapText="true">
                 <font>
-                    <Font name="System Italic" size="14.0"/>
+                    <Font name="System Italic" size="14.0" />
                 </font>
             </Label>
         </VBox>
     </StackPane>
     <StackPane layoutX="112.0" layoutY="112.0" prefHeight="144.0" prefWidth="173.0">
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="142.0" stroke="BLACK" strokeType="INSIDE"
-                   width="174.0"/>
-        <ImageView fx:id="productImage" fitHeight="110.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true"/>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="142.0" stroke="BLACK" strokeType="INSIDE" width="174.0" />
+        <ImageView fx:id="productImage" fitHeight="110.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true" />
     </StackPane>
 </AnchorPane>
