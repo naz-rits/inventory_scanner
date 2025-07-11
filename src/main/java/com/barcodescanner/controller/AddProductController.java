@@ -10,9 +10,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
-
+import java.util.Optional;
 
 
 @Controller
@@ -50,7 +49,7 @@ public class AddProductController {
 
     @FXML
     public void goToInventory(){
-        sceneManager.switchScene("/view/Inventory.fxml", "Inventory");
+        sceneManager.switchScene("/view/Inventory.fxml", "Inventory", Optional.empty());
     }
 
     @FXML

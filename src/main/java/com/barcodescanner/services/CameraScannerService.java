@@ -20,7 +20,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class CameraScannerService {
 
     private Webcam webcam;
-    private Thread scannerThread;
     private final AtomicBoolean running = new AtomicBoolean(false);
 
 
@@ -31,7 +30,7 @@ public class CameraScannerService {
         webcam.open();
         running.set(true);
 
-        scannerThread = new Thread(() -> {
+        Thread scannerThread = new Thread(() -> {
             long lastDetectedTime = System.currentTimeMillis();
             long timeout = 10_000; // 10 seconds timeout for example
 

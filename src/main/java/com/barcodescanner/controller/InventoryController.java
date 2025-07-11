@@ -1,6 +1,7 @@
 package com.barcodescanner.controller;
 
 import com.barcodescanner.SceneManager;
+import com.barcodescanner.model.Product;
 import com.barcodescanner.services.BarcodeScanner;
 import com.barcodescanner.services.CameraScannerService;
 import com.barcodescanner.services.ProductService;
@@ -16,11 +17,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Optional;
 
-@Component
+@Controller
 public class InventoryController {
 
     @Autowired
@@ -78,7 +81,7 @@ public class InventoryController {
                 @Override
                 public void onBarcodeDetected(String barcode) {
                     // update on JavaFX thread
-                    javafx.application.Platform.runLater(() -> {
+                    Platform.runLater(() -> {
                         productTextField.setText(barcode);
                         onSubmitClick(); // optionally auto-submit
                     });
@@ -86,7 +89,7 @@ public class InventoryController {
 
                 @Override
                 public void onError(String message) {
-                    javafx.application.Platform.runLater(() ->
+                    Platform.runLater(() ->
                             showAlert("Scanner Error: " + message)
                     );
                 }
@@ -96,7 +99,7 @@ public class InventoryController {
     @FXML
     private void handleGoToAddProduct() {
         cameraScannerService.stopCamera();
-        sceneManager.switchScene("/view/AddProduct.fxml", "Add Product");
+        sceneManager.switchScene("/view/AddProduct.fxml", "Add Product", Optional.empty());
     }
 
     @FXML
@@ -108,14 +111,7 @@ public class InventoryController {
         }
 
         productService.findByBarcode(barcode).ifPresentOrElse(product -> {
-            productNameLabel.setText(product.getName());
-            try {
-                if (product.getImageUrl() != null) {
-                    productImage.setImage(new Image(new FileInputStream(product.getImageUrl())));
-                }
-            } catch (FileNotFoundException e) {
-                productImage.setImage(null);
-            }
+            sceneManager.switchScene("/view/ProductView.fxml", "Product View", Optional.of(product));
         }, () -> {
             productNameLabel.setText("Product not found.");
             productImage.setImage(null);
