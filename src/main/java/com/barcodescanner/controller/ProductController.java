@@ -35,4 +35,12 @@ public class ProductController {
         product.setBarcode(barcode);
         return productService.save(product);
     }
+
+    @DeleteMapping("/{barcode}")
+    public void deleteProduct(@PathVariable String barcode) {
+        Optional<Product> product = productService.findByBarcode(barcode);
+        product.ifPresent(product1 -> {
+            productService.deleteById(product1.getId());
+        });
+    }
 }
