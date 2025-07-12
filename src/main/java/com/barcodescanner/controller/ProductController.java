@@ -3,6 +3,8 @@ package com.barcodescanner.controller;
 import com.barcodescanner.model.Product;
 import com.barcodescanner.repository.ProductRepository;
 import com.barcodescanner.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -23,8 +25,9 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product addProduct(@RequestBody Product product) {
-        return productService.save(product);
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        Product saved = productService.save(product);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/{barcode}")

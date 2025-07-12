@@ -68,6 +68,7 @@ public class AddProductController {
                 product.setDescription(productDescription.getText().trim());
                 product.setImageUrl(productUrl.getText().trim());
 
+
                 apiService.addProduct(product);
                 showAlert("Product saved successfully!");
 

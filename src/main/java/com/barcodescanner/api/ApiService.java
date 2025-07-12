@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ApiService {
 
-    private static final String BASE_URL = "http://localhost:8080/api/products/";
+    private static final String BASE_URL = "http://localhost:8080/api/products";
 
     private final HttpClient client;
     private final ObjectMapper objectMapper;
@@ -21,7 +21,7 @@ public class ApiService {
     }
 
     public Product getProductByBarcode(String barcode) throws Exception {
-        String url = BASE_URL + barcode;
+        String url = BASE_URL + "/" + barcode;
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -48,11 +48,14 @@ public class ApiService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        if (response.statusCode() == 200 && !response.body().isBlank()) {
+        int statusCode = response.statusCode();
+
+        if ((statusCode == 200 || statusCode == 201)) {
             return objectMapper.readValue(response.body(), Product.class);
-        }  else {
-            throw new Exception("Product not found or error: " + response.statusCode());
+        } else {
+            return product;
+        }
         }
     }
-}
+
 
