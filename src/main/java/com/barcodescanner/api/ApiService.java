@@ -36,5 +36,23 @@ public class ApiService {
             throw new Exception("Product not found or error: " + response.statusCode());
         }
     }
+
+    public Product addProduct(Product product) throws Exception {
+        String json = objectMapper.writeValueAsString(product);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200 && !response.body().isBlank()) {
+            return objectMapper.readValue(response.body(), Product.class);
+        }  else {
+            throw new Exception("Product not found or error: " + response.statusCode());
+        }
+    }
 }
 

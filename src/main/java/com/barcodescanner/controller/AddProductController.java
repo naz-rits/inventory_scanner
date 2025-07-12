@@ -1,8 +1,10 @@
 package com.barcodescanner.controller;
 
 import com.barcodescanner.SceneManager;
+import com.barcodescanner.api.ApiService;
 import com.barcodescanner.model.Product;
 import com.barcodescanner.services.ProductService;
+import com.beust.ah.A;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,6 +18,8 @@ import java.util.Optional;
 
 @Controller
 public class AddProductController {
+
+    private final ApiService apiService = new ApiService();
 
     @Autowired
     private ProductService productService;
@@ -64,7 +68,7 @@ public class AddProductController {
                 product.setDescription(productDescription.getText().trim());
                 product.setImageUrl(productUrl.getText().trim());
 
-                productService.save(product);
+                apiService.addProduct(product);
                 showAlert("Product saved successfully!");
 
                 clearForm();
