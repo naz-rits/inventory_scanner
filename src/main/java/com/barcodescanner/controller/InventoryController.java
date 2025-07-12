@@ -1,6 +1,7 @@
 package com.barcodescanner.controller;
 
 import com.barcodescanner.SceneManager;
+import com.barcodescanner.api.ApiService;
 import com.barcodescanner.model.Product;
 import com.barcodescanner.services.BarcodeScanner;
 import com.barcodescanner.services.CameraScannerService;
@@ -13,18 +14,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Optional;
 
 @Controller
 public class InventoryController {
+
+    private final ApiService apiService = new ApiService();
 
     @Autowired
     private ProductService productService;
@@ -68,7 +67,11 @@ public class InventoryController {
             cameraScannerService.startCamera(productImage, barcode -> {
                 Platform.runLater(() -> {
                     productTextField.setText(barcode);
-                    onSubmitClick();
+                    try {
+                        onSubmitClick();
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
                 });
             });
         });
@@ -83,7 +86,11 @@ public class InventoryController {
                     // update on JavaFX thread
                     Platform.runLater(() -> {
                         productTextField.setText(barcode);
-                        onSubmitClick(); // optionally auto-submit
+                        try {
+                            onSubmitClick(); // optionally auto-submit
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
                     });
                 }
 
@@ -103,19 +110,23 @@ public class InventoryController {
     }
 
     @FXML
-    private void onSubmitClick() {
+    private void onSubmitClick() throws Exception {
         String barcode = productTextField.getText().trim();
         if (barcode.isEmpty()) {
             showAlert("Please Enter Barcode");
             return;
         }
 
-        productService.findByBarcode(barcode).ifPresentOrElse(product -> {
+        try {
+            Product product = apiService.getProductByBarcode(barcode);
             sceneManager.switchScene("/view/ProductView.fxml", "Product View", Optional.of(product));
-        }, () -> {
+        }
+        catch (Exception ex) {
             productNameLabel.setText("Product not found.");
             productImage.setImage(null);
-        });
+            ex.printStackTrace();
+        }
+
     }
 
     private void showAlert(String alertMessage) {
