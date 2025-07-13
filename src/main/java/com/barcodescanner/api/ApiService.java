@@ -56,6 +56,23 @@ public class ApiService {
             return product;
         }
         }
+
+    public void deleteProduct(String barcode) throws Exception {
+        String url = BASE_URL + "/" + barcode;
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .DELETE()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200 && response.statusCode() != 204) {
+            throw new Exception("Product not found or error: " + response.statusCode());
+        }
     }
+    }
+
+
 
 

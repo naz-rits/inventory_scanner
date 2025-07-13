@@ -46,13 +46,13 @@
         </cursor>
     </Button>
     <StackPane layoutX="-1.0" layoutY="294.0" prefHeight="308.0" prefWidth="400.0">
-        <VBox alignment="TOP_CENTER" prefHeight="300.0" prefWidth="400.0" spacing="30.0" StackPane.alignment="CENTER">
+        <VBox alignment="TOP_CENTER" prefHeight="293.0" prefWidth="400.0" spacing="30.0" StackPane.alignment="CENTER">
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>
             <Label fx:id="productName" alignment="CENTER" contentDisplay="CENTER" text="Product Name" textAlignment="CENTER">
                 <font>
-                  <Font name="System Italic" size="14.0" />
+                  <Font name="System Bold Italic" size="18.0" />
                 </font>
             </Label>
             <Label fx:id="productBarcode" alignment="CENTER" contentDisplay="CENTER" text="Product Barcode" textAlignment="CENTER">
@@ -70,6 +70,11 @@
                     <Font name="System Italic" size="14.0" />
                 </font>
             </Label>
+         <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="151.0" style="-fx-background-color: red;" text="Delete" textAlignment="CENTER">
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
+         </Button>
         </VBox>
     </StackPane>
     <StackPane layoutX="112.0" layoutY="112.0" prefHeight="144.0" prefWidth="173.0">

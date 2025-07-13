@@ -6,6 +6,7 @@ import com.barcodescanner.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -39,8 +40,10 @@ public class ProductController {
     @DeleteMapping("/{barcode}")
     public void deleteProduct(@PathVariable String barcode) {
         Optional<Product> product = productService.findByBarcode(barcode);
-        product.ifPresent(product1 -> {
+        product.ifPresentOrElse(product1 -> {
             productService.deleteById(product1.getId());
+        }, () -> {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
         });
     }
 }
