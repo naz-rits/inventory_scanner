@@ -4,9 +4,7 @@ import com.barcodescanner.SceneManager;
 import com.barcodescanner.api.ApiService;
 import com.barcodescanner.model.Product;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +30,13 @@ public class ProductViewController {
     @FXML private Label productPrice;
     @FXML private Label productDescription;
     @FXML private Button sceneButton;
-    @FXML Button deleteButton;
+    @FXML private Button deleteButton;
     @FXML private Button editButton;
+    @FXML private TextField productNameTextfield;
+    @FXML private TextField productBarcodeTextfield;
+    @FXML private TextField productPriceTextfield;
+    @FXML private TextArea productDescriptionTextarea;
+
     private boolean isEditing = false;
 
     public void sceneSwitch(){
@@ -62,18 +65,93 @@ public class ProductViewController {
         });
     }
 
-    public void editButtonAction() throws FileNotFoundException {
-        editButton.setText("Edit");
+    @FXML
+    public void initialize(){
+        productNameTextfield.setVisible(false);
+        productBarcodeTextfield.setVisible(false);
+        productPriceTextfield.setVisible(false);
+        productDescriptionTextarea.setVisible(false);
+        productNameTextfield.setManaged(false);
+        productBarcodeTextfield.setManaged(false);
+        productPriceTextfield.setManaged(false);
+        productDescriptionTextarea.setManaged(false);
+    }
 
-        editButton.setOnAction(event -> {
-            isEditing = !isEditing; 
+    @FXML
+    public void editButtonAction() throws Exception {
+        isEditing = !isEditing;
 
-            if (isEditing) {
-                editButton.setText("Save Product");
-            } else {
-                editButton.setText("Edit");
-            }
-        });
+        if (isEditing) {
+            // Show editable fields
+            productNameTextfield.setVisible(true);
+            productNameTextfield.textProperty().bindBidirectional(productName.textProperty());
+
+            productBarcodeTextfield.setVisible(true);
+            productBarcodeTextfield.textProperty().bindBidirectional(productBarcode.textProperty());
+
+            productPriceTextfield.setVisible(true);
+            productPriceTextfield.textProperty().bindBidirectional(productPrice.textProperty());
+
+            productDescriptionTextarea.setVisible(true);
+            productDescriptionTextarea.textProperty().bindBidirectional(productDescription.textProperty());
+
+            productNameTextfield.setManaged(true);
+            productBarcodeTextfield.setManaged(true);
+            productPriceTextfield.setManaged(true);
+            productDescriptionTextarea.setManaged(true);
+
+            // Hide display labels
+            productName.setVisible(false);
+            productBarcode.setVisible(false);
+            productPrice.setVisible(false);
+            productDescription.setVisible(false);
+            productName.setManaged(false);
+            productBarcode.setManaged(false);
+            productPrice.setManaged(false);
+            productDescription.setManaged(false);
+
+            editButton.setText("Save Product");
+        } else {
+            // Hide editable fields
+            productNameTextfield.setVisible(false);
+            productBarcodeTextfield.setVisible(false);
+            productPriceTextfield.setVisible(false);
+            productDescriptionTextarea.setVisible(false);
+            productNameTextfield.setManaged(false);
+            productBarcodeTextfield.setManaged(false);
+            productPriceTextfield.setManaged(false);
+            productDescriptionTextarea.setManaged(false);
+
+            // Show display labels
+            productName.setVisible(true);
+            productBarcode.setVisible(true);
+            productPrice.setVisible(true);
+            productDescription.setVisible(true);
+            productName.setManaged(true);
+            productBarcode.setManaged(true);
+            productPrice.setManaged(true);
+            productDescription.setManaged(true);
+
+            Product product = apiService.getProductByBarcode(productBarcode.getText());
+
+            // Update label text with textfield values
+            productName.setText(productNameTextfield.getText());
+            product.setName(productNameTextfield.getText());
+
+            productBarcode.setText(productBarcodeTextfield.getText());
+            product.setBarcode(productBarcodeTextfield.getText());
+
+            productPrice.setText(productPriceTextfield.getText());
+            product.setPrice(Double.parseDouble(productPriceTextfield.getText()));
+
+            productDescription.setText(productDescriptionTextarea.getText());
+            product.setDescription(productDescriptionTextarea.getText());
+
+            apiService.updateProduct(product);
+            showAlert("Product updated successfully");
+
+            editButton.setText("Edit");
+        }
     }
 
     private void showAlert(String msg) {

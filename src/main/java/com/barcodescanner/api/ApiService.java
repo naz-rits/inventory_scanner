@@ -55,7 +55,32 @@ public class ApiService {
         } else {
             return product;
         }
+    }
+
+    public Product updateProduct(Product product) throws Exception {
+        String url = BASE_URL + "/" + product.getBarcode();
+
+        String json = objectMapper.writeValueAsString(product);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200 || response.statusCode() == 204) {
+            // Optionally parse updated product
+            if (!response.body().isBlank()) {
+                return objectMapper.readValue(response.body(), Product.class);
+            } else {
+                return product;
+            }
+        } else {
+            throw new Exception("Failed to update product: " + response.statusCode());
         }
+    }
 
     public void deleteProduct(String barcode) throws Exception {
         String url = BASE_URL + "/" + barcode;
@@ -71,6 +96,7 @@ public class ApiService {
             throw new Exception("Product not found or error: " + response.statusCode());
         }
     }
+
     }
 
 
