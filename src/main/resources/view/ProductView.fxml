@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -45,8 +46,8 @@
           <Cursor fx:constant="OPEN_HAND" />
         </cursor>
     </Button>
-    <StackPane layoutX="-1.0" layoutY="294.0" prefHeight="308.0" prefWidth="400.0">
-        <VBox alignment="TOP_CENTER" prefHeight="293.0" prefWidth="400.0" spacing="30.0" StackPane.alignment="CENTER">
+    <StackPane layoutX="-1.0" layoutY="324.0" prefHeight="278.0" prefWidth="400.0">
+        <VBox alignment="TOP_CENTER" prefHeight="297.0" prefWidth="400.0" spacing="30.0" StackPane.alignment="CENTER">
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>
@@ -70,11 +71,20 @@
                     <Font name="System Italic" size="14.0" />
                 </font>
             </Label>
-         <Button fx:id="deleteButton" onAction="#deleteButtonAction" mnemonicParsing="false" prefHeight="26.0" prefWidth="151.0" style="-fx-background-color: red;" text="Delete" textAlignment="CENTER">
-            <cursor>
-               <Cursor fx:constant="HAND" />
-            </cursor>
-         </Button>
+         <ButtonBar prefHeight="69.0" prefWidth="400.0">
+           <buttons>
+             <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonAction" prefHeight="29.0" style="-fx-background-color: #7EF59A;" text="Edit">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </Button>
+               <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonAction" prefHeight="29.0" prefWidth="151.0" style="-fx-background-color: red;" text="Delete" textAlignment="CENTER">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </Button>
+           </buttons>
+         </ButtonBar>
         </VBox>
     </StackPane>
     <StackPane layoutX="112.0" layoutY="112.0" prefHeight="144.0" prefWidth="173.0">

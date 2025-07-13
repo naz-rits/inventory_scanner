@@ -3,22 +3,19 @@ package com.barcodescanner.controller;
 import com.barcodescanner.SceneManager;
 import com.barcodescanner.api.ApiService;
 import com.barcodescanner.model.Product;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 @Controller
@@ -36,6 +33,8 @@ public class ProductViewController {
     @FXML private Label productDescription;
     @FXML private Button sceneButton;
     @FXML Button deleteButton;
+    @FXML private Button editButton;
+    private boolean isEditing = false;
 
     public void sceneSwitch(){
         sceneManager.switchScene("/view/Inventory.fxml", "Product View", Optional.empty());
@@ -59,6 +58,20 @@ public class ProductViewController {
                 sceneManager.switchScene("/view/Inventory.fxml", "Inventory", Optional.empty());
             } catch (Exception e) {
                 throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void editButtonAction() throws FileNotFoundException {
+        editButton.setText("Edit");
+
+        editButton.setOnAction(event -> {
+            isEditing = !isEditing; 
+
+            if (isEditing) {
+                editButton.setText("Save Product");
+            } else {
+                editButton.setText("Edit");
             }
         });
     }
