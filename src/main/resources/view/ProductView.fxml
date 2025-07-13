@@ -70,7 +70,7 @@
                     <Font name="System Italic" size="14.0" />
                 </font>
             </Label>
-         <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="151.0" style="-fx-background-color: red;" text="Delete" textAlignment="CENTER">
+         <Button fx:id="deleteButton" onAction="#deleteButtonAction" mnemonicParsing="false" prefHeight="26.0" prefWidth="151.0" style="-fx-background-color: red;" text="Delete" textAlignment="CENTER">
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor>
